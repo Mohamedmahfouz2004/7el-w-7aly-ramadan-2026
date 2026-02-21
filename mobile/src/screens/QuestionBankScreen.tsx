@@ -230,49 +230,59 @@ export default function QuestionBankScreen({ navigation }: any) {
                     <View style={styles.modalContent}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View style={styles.modalHeader}>
-                                <TouchableOpacity onPress={() => setShowAddModal(false)}>
-                                    <Ionicons name="close-circle" size={28} color={Colors.incorrect} />
-                                </TouchableOpacity>
                                 <Text style={styles.modalTitle}>إضافة سؤال جديد ✍️</Text>
+                                <TouchableOpacity onPress={() => setShowAddModal(false)}>
+                                    <View style={styles.closeBtn}>
+                                        <Ionicons name="close" size={24} color={Colors.white} />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
 
-                            <Text style={styles.modalLabel}>نص السؤال</Text>
-                            <TextInput
-                                style={[styles.modalInput, styles.multilineInput]}
-                                placeholder="اكتب السؤال هنا..."
-                                placeholderTextColor={Colors.textMuted}
-                                value={newText}
-                                onChangeText={setNewText}
-                                multiline
-                                textAlign="right"
-                            />
-
-                            <Text style={styles.modalLabel}>الاختيارات</Text>
-                            {newOptions.map((opt, i) => (
+                            <View style={styles.formSection}>
+                                <Text style={styles.modalLabel}>نص السؤال</Text>
                                 <TextInput
-                                    key={i}
-                                    style={styles.modalInput}
-                                    placeholder={`اختيار ${i + 1}`}
+                                    style={[styles.modalInput, styles.multilineInput]}
+                                    placeholder="اكتب السؤال هنا..."
                                     placeholderTextColor={Colors.textMuted}
-                                    value={opt}
-                                    onChangeText={(text) => {
-                                        const updated = [...newOptions];
-                                        updated[i] = text;
-                                        setNewOptions(updated);
-                                    }}
+                                    value={newText}
+                                    onChangeText={setNewText}
+                                    multiline
                                     textAlign="right"
                                 />
-                            ))}
+                            </View>
 
-                            <Text style={styles.modalLabel}>الإجابة الصحيحة</Text>
-                            <TextInput
-                                style={styles.modalInput}
-                                placeholder="الإجابة..."
-                                placeholderTextColor={Colors.textMuted}
-                                value={newAnswer}
-                                onChangeText={setNewAnswer}
-                                textAlign="right"
-                            />
+                            <View style={styles.formSection}>
+                                <Text style={styles.modalLabel}>الاختيارات</Text>
+                                <View style={styles.optionsGrid}>
+                                    {newOptions.map((opt, i) => (
+                                        <TextInput
+                                            key={i}
+                                            style={[styles.modalInput, { flex: 1, minWidth: '45%' }]}
+                                            placeholder={`اختيار ${i + 1}`}
+                                            placeholderTextColor={Colors.textMuted}
+                                            value={opt}
+                                            onChangeText={(text) => {
+                                                const updated = [...newOptions];
+                                                updated[i] = text;
+                                                setNewOptions(updated);
+                                            }}
+                                            textAlign="right"
+                                        />
+                                    ))}
+                                </View>
+                            </View>
+
+                            <View style={styles.formSection}>
+                                <Text style={styles.modalLabel}>الإجابة الصحيحة</Text>
+                                <TextInput
+                                    style={styles.modalInput}
+                                    placeholder="الإجابة..."
+                                    placeholderTextColor={Colors.textMuted}
+                                    value={newAnswer}
+                                    onChangeText={setNewAnswer}
+                                    textAlign="right"
+                                />
+                            </View>
 
                             <View style={styles.formRow}>
                                 <View style={{ flex: 1 }}>
@@ -301,17 +311,19 @@ export default function QuestionBankScreen({ navigation }: any) {
                                 </View>
                             </View>
 
-                            <Text style={styles.modalLabel}>التصنيف</Text>
-                            <View style={styles.chipRow}>
-                                {CATEGORIES.map(cat => (
-                                    <TouchableOpacity
-                                        key={cat}
-                                        style={[styles.catChip, newCategory === cat && styles.activeCatChip]}
-                                        onPress={() => setNewCategory(cat)}
-                                    >
-                                        <Text style={[styles.catChipText, newCategory === cat && styles.activeCatChipText]}>{cat}</Text>
-                                    </TouchableOpacity>
-                                ))}
+                            <View style={styles.formSection}>
+                                <Text style={styles.modalLabel}>التصنيف</Text>
+                                <View style={styles.chipRow}>
+                                    {CATEGORIES.map(cat => (
+                                        <TouchableOpacity
+                                            key={cat}
+                                            style={[styles.catChip, newCategory === cat && styles.activeCatChip]}
+                                            onPress={() => setNewCategory(cat)}
+                                        >
+                                            <Text style={[styles.catChipText, newCategory === cat && styles.activeCatChipText]}>{cat}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
                             </View>
 
                             <TouchableOpacity style={styles.submitBtn} onPress={handleAddQuestion}>
@@ -415,23 +427,29 @@ const styles = StyleSheet.create({
     modalContent: {
         backgroundColor: Colors.primaryLight, borderTopLeftRadius: BorderRadius.xl,
         borderTopRightRadius: BorderRadius.xl, padding: Spacing.lg,
-        maxHeight: '85%',
+        maxHeight: '90%',
     },
     modalHeader: {
-        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: Spacing.lg,
+        flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginBottom: Spacing.lg,
     },
     modalTitle: { fontSize: FontSizes.xl, fontWeight: 'bold', color: Colors.gold },
+    closeBtn: {
+        width: 32, height: 32, borderRadius: 16, backgroundColor: Colors.incorrect + '20',
+        alignItems: 'center', justifyContent: 'center',
+    },
+    formSection: { marginBottom: Spacing.md },
+    optionsGrid: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: Spacing.sm },
     modalLabel: {
         fontSize: FontSizes.sm, color: Colors.textLight, textAlign: 'right', marginBottom: Spacing.xs,
-        fontWeight: '600', marginTop: Spacing.sm,
+        fontWeight: '600',
     },
     modalInput: {
         backgroundColor: Colors.primaryDark, borderRadius: BorderRadius.md,
         padding: Spacing.md, color: Colors.white, fontSize: FontSizes.md,
-        borderWidth: 1, borderColor: Colors.cardBorder, marginBottom: Spacing.xs,
+        borderWidth: 1, borderColor: Colors.cardBorder,
     },
     multilineInput: { minHeight: 80, textAlignVertical: 'top' },
-    formRow: { flexDirection: 'row-reverse', gap: Spacing.md },
+    formRow: { flexDirection: 'row-reverse', gap: Spacing.md, marginBottom: Spacing.md },
     chipRow: { flexDirection: 'row-reverse', flexWrap: 'wrap', gap: Spacing.xs },
     diffChip: {
         paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, borderRadius: BorderRadius.round,
@@ -447,7 +465,7 @@ const styles = StyleSheet.create({
     activeCatChip: { backgroundColor: Colors.emerald + '20', borderColor: Colors.emerald },
     catChipText: { fontSize: FontSizes.xs, color: Colors.textMuted },
     activeCatChipText: { color: Colors.emerald },
-    submitBtn: { borderRadius: BorderRadius.lg, overflow: 'hidden', marginTop: Spacing.lg, marginBottom: Spacing.xl },
+    submitBtn: { borderRadius: BorderRadius.lg, overflow: 'hidden', marginTop: Spacing.lg, marginBottom: 50 },
     submitGradient: { padding: Spacing.lg, alignItems: 'center' },
     submitText: { fontSize: FontSizes.lg, fontWeight: 'bold', color: Colors.primaryDark },
 });
