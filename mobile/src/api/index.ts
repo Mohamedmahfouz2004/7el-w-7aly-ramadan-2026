@@ -1,8 +1,8 @@
 import { Platform } from 'react-native';
 
-// Your computer's WiFi IP - change this if your network changes
+// Cloud Backend URL (Vercel)
 const getBaseUrl = () => {
-    return 'http://192.168.1.5:5000';
+    return 'https://7el-w-7aly-ramadan-2026.vercel.app';
 };
 
 export const API_BASE = getBaseUrl();
