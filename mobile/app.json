@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "حل و حلي",
+    "slug": "7el-w-7aly",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a0533"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.7elw7aly.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a0533"
+      },
+      "package": "com.halw7aly.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a16cff88-e949-4014-91de-36eba65a1e2d"
+      }
+    },
+    "owner": "mohamed222103"
+  }
+}
