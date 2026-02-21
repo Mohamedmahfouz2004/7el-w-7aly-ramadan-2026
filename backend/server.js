@@ -29,6 +29,10 @@ app.get('/api/health', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🌙 حل و حلي server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🌙 حل و حلي server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
